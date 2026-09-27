@@ -16,6 +16,7 @@ from vision import buka_kamera, ambil_frame, proses_frame
 from utils import simpan_log
 
 
+# ==================== KONFIGURASI HALAMAN ====================
 st.set_page_config(
     page_title=APP_NAME,
     layout="wide",
@@ -23,6 +24,7 @@ st.set_page_config(
 )
 
 
+# ==================== CSS KUSTOM ====================
 st.markdown("""
 <style>
     .stApp {
@@ -133,6 +135,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+# ==================== INISIALISASI STATE ====================
 if "riwayat" not in st.session_state:
     st.session_state.riwayat = []
 if "monitoring" not in st.session_state:
@@ -151,6 +154,7 @@ if "sensor_terakhir" not in st.session_state:
     }
 
 
+# ==================== FUNGSI ====================
 def mainkan_alarm():
     """Bunyi alarm saat status BAHAYA"""
     html = """
@@ -158,7 +162,7 @@ def mainkan_alarm():
         <source src="https://www.soundjay.com/buttons/sounds/button-09.mp3" type="audio/mpeg">
     </audio>
     """
-    st.components.v1.html(html, height=0)
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def catat_riwayat(data):
@@ -236,6 +240,7 @@ def render_sensor(data):
         """, unsafe_allow_html=True)
 
 
+# ==================== HEADER ====================
 st.markdown(f"""
 <div class="header-box">
     <div class="header-title">QUARAFISH</div>
@@ -250,6 +255,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
+# ==================== SIDEBAR ====================
 with st.sidebar:
     st.markdown("### Pengaturan Sistem")
     interval = st.slider("Interval deteksi (detik)", 1, 5, 2)
@@ -272,7 +278,7 @@ with st.sidebar:
     """)
 
     st.divider()
-    if st.button("Reset Statistik", use_container_width=True):
+    if st.button("Reset Statistik", width='stretch'):
         st.session_state.riwayat = []
         st.session_state.total_baca = 0
         st.session_state.total_normal = 0
@@ -281,6 +287,7 @@ with st.sidebar:
         st.rerun()
 
 
+# ==================== METRIK ====================
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
 
 with col_m1:
@@ -318,6 +325,7 @@ with col_m4:
 st.markdown("<br>", unsafe_allow_html=True)
 
 
+# ==================== LAYOUT UTAMA ====================
 col1, col2 = st.columns([2, 1])
 
 with col1:
@@ -332,21 +340,22 @@ with col2:
     alarm_placeholder = st.empty()
 
 
+# ==================== KONTROL ====================
 st.markdown("---")
 st.markdown("### Kontrol Pemantauan")
 
 tombol_col1, tombol_col2, tombol_col3 = st.columns(3)
 
 with tombol_col1:
-    if st.button("Mulai Pemantauan", type="primary", use_container_width=True):
+    if st.button("Mulai Pemantauan", type="primary", width='stretch'):
         st.session_state.monitoring = True
 
 with tombol_col2:
-    if st.button("Hentikan Pemantauan", use_container_width=True):
+    if st.button("Hentikan Pemantauan", width='stretch'):
         st.session_state.monitoring = False
 
 with tombol_col3:
-    if st.button("Deteksi Sekali", use_container_width=True):
+    if st.button("Deteksi Sekali", width='stretch'):
         data = baca_semua_sensor()
         st.session_state.sensor_terakhir = data
         catat_riwayat(data)
@@ -357,7 +366,7 @@ with tombol_col3:
             if frame is not None:
                 frame = proses_frame(frame, data["status"])
                 frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                frame_placeholder.image(frame_rgb, channels="RGB", use_container_width=True)
+                frame_placeholder.image(frame_rgb, channels="RGB", width='stretch')
             cap.release()
 
         if data["status"] == STATUS_BAHAYA:
@@ -367,6 +376,7 @@ with tombol_col3:
         st.rerun()
 
 
+# ==================== LOOP PEMANTAUAN ====================
 if st.session_state.monitoring:
     cap = buka_kamera()
 
@@ -384,7 +394,7 @@ if st.session_state.monitoring:
             if frame is not None:
                 frame = proses_frame(frame, data["status"])
                 frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                frame_placeholder.image(frame_rgb, channels="RGB", use_container_width=True)
+                frame_placeholder.image(frame_rgb, channels="RGB", width='stretch')
 
             # Panel sensor
             with sensor_placeholder.container():
@@ -420,6 +430,7 @@ else:
         frame_placeholder.info("Pemantauan tidak aktif. Klik Mulai Pemantauan atau Deteksi Sekali.")
 
 
+# ==================== RIWAYAT & GRAFIK ====================
 st.markdown("---")
 col_r1, col_r2 = st.columns([2, 1])
 
@@ -427,7 +438,7 @@ with col_r1:
     st.markdown("### Riwayat Deteksi")
     if st.session_state.riwayat:
         df = pd.DataFrame(st.session_state.riwayat)
-        st.dataframe(df, use_container_width=True, hide_index=True)
+        st.dataframe(df, width='stretch', hide_index=True)
     else:
         st.info("Belum ada riwayat deteksi.")
 
@@ -447,6 +458,7 @@ with col_r2:
         st.info("Belum ada data.")
 
 
+# ==================== INFO BAWAH ====================
 st.markdown("---")
 col_i1, col_i2, col_i3 = st.columns(3)
 
@@ -475,5 +487,6 @@ with col_i3:
     """, unsafe_allow_html=True)
 
 
+# ==================== FOOTER ====================
 st.markdown("---")
 st.caption(APP_FOOTER)
