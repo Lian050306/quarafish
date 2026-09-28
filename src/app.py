@@ -426,7 +426,7 @@ def halaman_pengenalan():
             <br><br>
             Sistem ini dirancang untuk mendukung <b>petugas karantina</b>
             dalam melakukan pemantauan, mitigasi, dan penguatan biosekuriti
-            perikanan &mdash; karena deteksi lebih dini berarti tindakan lebih cepat,
+            perikanan karena deteksi lebih dini berarti tindakan lebih cepat,
             risiko lebih terkendali, dan ikan yang lebih aman.
         </div>
     </div>
