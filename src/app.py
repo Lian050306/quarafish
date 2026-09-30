@@ -424,10 +424,15 @@ def halaman_pengenalan():
             pada ikan, mencatat hasil pemeriksaan, dan memberikan peringatan
             risiko secara cepat.
             <br><br>
-            Sistem ini dirancang untuk mendukung <b>petugas karantina</b>
-            dalam melakukan pemantauan, mitigasi, dan penguatan biosekuriti
-            perikanan karena deteksi lebih dini berarti tindakan lebih cepat,
-            risiko lebih terkendali, dan ikan yang lebih aman.
+            Sistem ini dirancang untuk mengisi celah antara pemeriksaan visual 
+            yang cepat tetapi subjektif dan uji laboratorium yang akurat tetapi 
+            membutuhkan waktu dan biaya. Melalui pemindaian kamera, sensor UV-IoT, 
+            dan dashboard web, QUARAFISH mendukung petugas karantina dalam melakukan 
+            penyaringan awal, pemantauan, dan mitigasi risiko penyakit ikan secara 
+            lebih cepat, seragam, dan terdokumentasi. Deteksi lebih dini memungkinkan 
+            boks yang mencurigakan diarahkan untuk pemeriksaan lanjutan sebelum masuk 
+            ke lokasi budidaya, sehingga peluang penyebaran HPIK dapat ditekan di titik 
+            paling awal tanpa menggantikan uji laboratorium.
         </div>
     </div>
     """, unsafe_allow_html=True)
